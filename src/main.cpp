@@ -1,26 +1,17 @@
-#include <cstdio>
 #include <GLFW/glfw3.h>
+
+#include <cstdio>
+
+#include "Graphics/Window.hpp"
+
+using namespace sge;
 
 int main()
 {
-  if (!glfwInit())
-    return -1;
+    Window window{640, 480, "Simple GUI Engine"};
+    while (!window.ShouldClose()) {
+      window.Update();
+    }
 
-  GLFWwindow *window = glfwCreateWindow(640, 480, "Simple GUI Engine", NULL, NULL);
-  if (!window)
-  {
-    glfwTerminate();
-    return -1;
-  }
-
-  glfwMakeContextCurrent(window);
-
-  while (!glfwWindowShouldClose(window))
-  {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-  }
-
-  return 0;
+    return 0;
 }
