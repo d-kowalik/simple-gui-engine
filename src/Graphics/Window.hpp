@@ -1,3 +1,5 @@
+#include <glad/glad.h>
+
 #include <GLFW/glfw3.h>
 
 #include <string>
@@ -10,6 +12,12 @@ namespace sge {
     std::string _title;
 
     void Resize(int w, int h);
+
+    bool InitializeGLFW();
+
+    bool CreateWindow();
+
+    bool InitializeOpenGL();
 
   public:
     Window(int width, int height, std::string title);
