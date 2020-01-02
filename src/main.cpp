@@ -1,6 +1,7 @@
 #include <cstdio>
 
 #include "Graphics/Window.hpp"
+#include "Util/FileUtil.hpp"
 
 using namespace sge;
 
