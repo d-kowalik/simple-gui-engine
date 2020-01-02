@@ -6,11 +6,12 @@
 
 using namespace sge;
 
-int main()
-{
+int main() {
     Window window{640, 480, "Simple GUI Engine"};
     while (!window.ShouldClose()) {
-      window.Update();
+        window.Clear();
+
+        window.Update();
     }
 
     return 0;
