@@ -5,12 +5,12 @@
 using namespace sge;
 
 int main() {
-    Window window{640, 480, "Simple GUI Engine"};
-    while (!window.ShouldClose()) {
-        window.Clear();
+  Window window{640, 480, "Simple GUI Engine"};
+  while (!window.ShouldClose()) {
+    window.Clear();
 
-        window.Update();
-    }
+    window.Update();
+  }
 
-    return 0;
+  return 0;
 }
