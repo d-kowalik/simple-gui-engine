@@ -9,6 +9,7 @@
 namespace sge::FileUtil {
 
   std::optional<std::string> Read(const std::string &path) {
+    printf("Reading file: %s\n", path.data());
     std::ifstream ifstream{path};
     if (ifstream.is_open()) {
       ifstream.unsetf(std::ios::skipws);
