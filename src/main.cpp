@@ -7,7 +7,7 @@
 using namespace sge;
 
 int main() {
-  Window window{640, 480, "Simple GUI Engine"};
+  Window::Create(640, 480, "Simple GUI Engine");
 
   const auto vertex_shader = Graphics::Shader(GL_VERTEX_SHADER, "../src/Shaders/flat_color.vert");
   const auto fragment_shader = Graphics::Shader(GL_FRAGMENT_SHADER, "../src/Shaders/flat_color.frag");
@@ -41,13 +41,13 @@ int main() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-  while (!window.ShouldClose()) {
-    window.Clear();
+  while (!Window::Instance()->ShouldClose()) {
+    Window::Instance()->Clear();
 
     shader_program.Use();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-    window.Update();
+    Window::Instance()->Update();
   }
 
   return 0;

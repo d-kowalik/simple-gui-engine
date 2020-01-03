@@ -7,6 +7,8 @@
 namespace sge {
   class Window {
   private:
+    static Window* _instance;
+
     GLFWwindow *_window;
     int _width, _height;
     std::string _title;
@@ -19,9 +21,9 @@ namespace sge {
 
     bool InitializeOpenGL();
 
-  public:
     Window(int width, int height, std::string title);
 
+  public:
     inline bool ShouldClose() const { return glfwWindowShouldClose(_window); }
 
     void Update() const;
@@ -29,6 +31,10 @@ namespace sge {
     void Clear() const;
 
     void Close() const;
+
+    static Window* Instance() { return _instance; }
+
+    static Window* Create(int width, int height, const std::string& title);
 
     friend void framebuffer_size_callback(GLFWwindow *window, int w, int h);
   };
