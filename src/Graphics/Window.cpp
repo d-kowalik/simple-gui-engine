@@ -4,7 +4,8 @@
 
 namespace sge {
   void framebuffer_size_callback(GLFWwindow *window, int w, int h);
-  Window* Window::_instance = nullptr;
+
+  Window *Window::_instance = nullptr;
 
   Window::Window(int width, int height, std::string title) : _width(width), _height(height), _title(std::move(title)) {
     if (!InitializeGLFW()) {
@@ -76,8 +77,13 @@ namespace sge {
     return true;
   }
 
-  Window *Window::Create(int width, int height, const std::string& title) {
+  Window *Window::Create(int width, int height, const std::string &title) {
     Window::_instance = new Window(width, height, title);
     return Window::_instance;
+  }
+
+  void Window::Destroy() {
+    if (_instance != nullptr)
+      delete Window::_instance;
   }
 } // namespace sge

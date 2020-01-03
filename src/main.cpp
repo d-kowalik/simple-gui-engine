@@ -53,5 +53,7 @@ int main() {
     Window::Instance()->Update();
   }
 
+  Window::Destroy();
+
   return 0;
 }

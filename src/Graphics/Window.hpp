@@ -37,6 +37,7 @@ namespace sge {
     static Window* Instance() { return _instance; }
 
     static Window* Create(int width, int height, const std::string& title);
+    static void Destroy();
 
     friend void framebuffer_size_callback(GLFWwindow *window, int w, int h);
   };
