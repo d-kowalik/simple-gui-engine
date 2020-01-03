@@ -2,7 +2,7 @@
 
 // from glfw3.h
 
-namespace sge::Input {
+namespace sge {
 
   enum class Key {
     SPACE = 32,

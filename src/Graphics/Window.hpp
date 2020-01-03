@@ -32,6 +32,8 @@ namespace sge {
 
     void Close() const;
 
+    GLFWwindow* GetNativeHandle() const { return _window; }
+
     static Window* Instance() { return _instance; }
 
     static Window* Create(int width, int height, const std::string& title);

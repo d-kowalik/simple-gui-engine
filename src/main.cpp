@@ -3,6 +3,7 @@
 #include "Graphics/Window.hpp"
 #include "Graphics/Shader.hpp"
 #include "Graphics/ShaderProgram.hpp"
+#include "Input/Input.hpp"
 
 using namespace sge;
 
@@ -43,6 +44,8 @@ int main() {
 
   while (!Window::Instance()->ShouldClose()) {
     Window::Instance()->Clear();
+
+    if (Input::IsKeyPressed(Key::ESCAPE)) Window::Instance()->Close();
 
     shader_program.Use();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
