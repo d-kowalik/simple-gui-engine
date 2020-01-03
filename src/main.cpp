@@ -2,34 +2,16 @@
 
 #include "Graphics/Window.hpp"
 #include "Graphics/Shader.hpp"
+#include "Graphics/ShaderProgram.hpp"
 
 using namespace sge;
 
 int main() {
   Window window{640, 480, "Simple GUI Engine"};
 
-  Graphics::Shader vertex_shader = Graphics::Shader(GL_VERTEX_SHADER, "../src/Shaders/flat_color.vert");
-  Graphics::Shader fragment_shader = Graphics::Shader(GL_FRAGMENT_SHADER, "../src/Shaders/flat_color.frag");
-
-  unsigned shader_program = glCreateProgram();
-  glAttachShader(shader_program, vertex_shader.GetId());
-  glAttachShader(shader_program, fragment_shader.GetId());
-  glLinkProgram(shader_program);
-  int success = 0;
-  glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-  if (!success)
-  {
-    GLint logSize = 0;
-    glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &logSize);
-    char* info_log = new char[logSize];
-    glGetProgramInfoLog(shader_program, logSize, &logSize, info_log);
-    printf("%s\n", info_log);
-
-    glDeleteProgram(shader_program);
-    vertex_shader.Delete();
-    fragment_shader.Delete();
-    delete[] info_log;
-  }
+  const auto vertex_shader = Graphics::Shader(GL_VERTEX_SHADER, "../src/Shaders/flat_color.vert");
+  const auto fragment_shader = Graphics::Shader(GL_FRAGMENT_SHADER, "../src/Shaders/flat_color.frag");
+  const auto shader_program = Graphics::ShaderProgram({vertex_shader, fragment_shader});
 
   float vertices[] = {
       -.5f, -.5f, 0.f, 1.f, .5f, 1.f,
@@ -62,7 +44,7 @@ int main() {
   while (!window.ShouldClose()) {
     window.Clear();
 
-    glUseProgram(shader_program);
+    shader_program.Use();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
     window.Update();
