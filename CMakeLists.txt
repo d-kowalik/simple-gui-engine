@@ -18,7 +18,7 @@ file(GLOB_RECURSE HEADER_FILES
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # Define the executable
-add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} src/Util/FileUtil.hpp)
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} src/Util/FileUtil.hpp src/Graphics/Shader.cpp src/Graphics/Shader.hpp)
 
 find_package(OpenGL REQUIRED)
 
