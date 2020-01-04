@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include <glm/glm.hpp>
+
 #include "Shader.hpp"
 
 namespace Graphics {
@@ -13,5 +15,7 @@ namespace Graphics {
     ShaderProgram(const std::vector<Shader>& shaders);
 
     void Use() const;
+
+    void SetUniformMat4f(const std::string& name, glm::mat4 value);
   };
 }

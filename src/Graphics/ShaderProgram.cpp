@@ -1,6 +1,7 @@
 #include "ShaderProgram.hpp"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 Graphics::ShaderProgram::ShaderProgram(const std::vector<Shader>& shaders) : _shaders(shaders) {
   _id = glCreateProgram();
@@ -25,4 +26,9 @@ Graphics::ShaderProgram::ShaderProgram(const std::vector<Shader>& shaders) : _sh
 
 void Graphics::ShaderProgram::Use() const {
   glUseProgram(_id);
+}
+
+void Graphics::ShaderProgram::SetUniformMat4f(const std::string &name, glm::mat4 value) {
+  unsigned location = glGetUniformLocation(_id, name);
+  glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 }
