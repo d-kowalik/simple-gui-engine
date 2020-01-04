@@ -49,9 +49,11 @@ int main() {
 
   glm::mat4 view = glm::lookAt(camera_position, camera_position + camera_front, camera_up);
   glm::mat4 projection = glm::ortho(0.0f, 640.f, 0.0f, 480.f, 0.1f, 10.0f);
+  glm::mat4 model(1.0f);
 
   shader_program.Use();
 
+  shader_program.SetUniformMat4f("model", model);
   shader_program.SetUniformMat4f("view", view);
   shader_program.SetUniformMat4f("projection", projection);
 
@@ -66,8 +68,11 @@ int main() {
     if (Input::IsKeyPressed(Key::S)) camera_position -= camera_speed * camera_up;
     view = glm::lookAt(camera_position, camera_position + camera_front, camera_up);
 
+    model = glm::rotate(model, glm::radians(0.05f), {.0f, .0f, 1.f});
+
     shader_program.Use();
     shader_program.SetUniformMat4f("view", view);
+    shader_program.SetUniformMat4f("model", model);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
     Window::Instance()->Update();
