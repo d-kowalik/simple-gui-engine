@@ -16,6 +16,6 @@ namespace Graphics {
 
     void Use() const;
 
-    void SetUniformMat4f(const std::string& name, glm::mat4 value);
+    void SetUniformMat4f(const std::string& name, const glm::mat4& value) const;
   };
 }

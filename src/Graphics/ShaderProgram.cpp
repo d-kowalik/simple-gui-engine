@@ -28,7 +28,7 @@ void Graphics::ShaderProgram::Use() const {
   glUseProgram(_id);
 }
 
-void Graphics::ShaderProgram::SetUniformMat4f(const std::string &name, glm::mat4 value) {
-  unsigned location = glGetUniformLocation(_id, name);
+void Graphics::ShaderProgram::SetUniformMat4f(const std::string &name, const glm::mat4& value) const {
+  unsigned location = glGetUniformLocation(_id, name.data());
   glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 }
