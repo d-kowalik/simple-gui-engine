@@ -30,11 +30,14 @@ message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
 find_package(GLFW3 REQUIRED)
 message(STATUS "Found GLFW3 in ${GLFW3_INCLUDE_DIR}")
 
+# freetype in lib folder, may be changed to somethin nicer like up there
+find_library(FREETYPE freetype lib)
+
 # GLAD
 add_library(GLAD "thirdparty/glad.c")
 
 # Put all libraries into a variable
-set(LIBS glfw3 opengl32 GLAD)
+set(LIBS glfw3 opengl32 GLAD ${FREETYPE})
 
 # Define the include DIRs
 include_directories(
