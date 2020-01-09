@@ -32,3 +32,8 @@ void Graphics::ShaderProgram::SetUniformMat4f(const std::string &name, const glm
   unsigned location = glGetUniformLocation(_id, name.data());
   glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 }
+
+void Graphics::ShaderProgram::SetUniform3f(const std::string &name, const glm::vec3 value) const {
+  unsigned location = glGetUniformLocation(_id, name.data());
+  glUniform3f(location, value.x, value.y, value.z);
+}
