@@ -18,7 +18,7 @@ file(GLOB_RECURSE HEADER_FILES
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # Define the executable
-add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} src/Util/FileUtil.hpp src/Graphics/Shader.cpp src/Graphics/Shader.hpp src/Graphics/ShaderProgram.cpp src/Graphics/ShaderProgram.hpp src/Input/Keycodes.hpp src/Input/Input.cpp src/Input/Input.hpp src/Camera.cpp src/Camera.hpp src/Graphics/Font.cpp src/Graphics/Font.hpp src/Graphics/FontRenderer.cpp src/Graphics/FontRenderer.hpp)
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} src/Util/FileUtil.hpp src/Graphics/Shader.cpp src/Graphics/Shader.hpp src/Graphics/ShaderProgram.cpp src/Graphics/ShaderProgram.hpp src/Input/Keycodes.hpp src/Input/Input.cpp src/Input/Input.hpp src/Camera.cpp src/Camera.hpp src/Graphics/Font.cpp src/Graphics/Font.hpp src/Graphics/FontRenderer.cpp src/Graphics/FontRenderer.hpp src/Util/Callback.hpp)
 
 find_package(OpenGL REQUIRED)
 
