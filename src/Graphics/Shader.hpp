@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Graphics {
+namespace sge::Graphics {
   class Shader {
     unsigned _type, _id;
 

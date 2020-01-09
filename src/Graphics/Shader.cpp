@@ -4,7 +4,7 @@
 
 #include "Util/FileUtil.hpp"
 
-namespace Graphics {
+namespace sge::Graphics {
   Shader::Shader(unsigned type, const std::string &path) : _type(type) {
     const auto data = sge::FileUtil::Read(path);
     const auto source = data.value_or("");

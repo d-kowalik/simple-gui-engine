@@ -6,7 +6,7 @@
 
 #include "Shader.hpp"
 
-namespace Graphics {
+namespace sge::Graphics {
   class ShaderProgram {
     unsigned _id;
     std::vector<Shader> _shaders{};

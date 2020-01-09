@@ -2,9 +2,8 @@
 #include <map>
 
 #include <glm/gtc/matrix_transform.hpp>
-#include <ft2build.h>
-#include FT_FREETYPE_H
 
+#include "Graphics/Font.hpp"
 #include "Graphics/Window.hpp"
 #include "Graphics/Shader.hpp"
 #include "Graphics/ShaderProgram.hpp"
@@ -23,28 +22,23 @@ void HandleInput(float delta) {
   if (Input::IsKeyPressed(Key::S)) camera.Move(Camera::Direction::DOWN, delta);
 }
 
-struct Character {
-  unsigned texture_id;
-  glm::ivec2 size;
-  glm::ivec2 bearing;
-  unsigned advance;
-};
-
-std::map<char, Character> characters;
 unsigned text_vao, text_vbo;
 
 void
-RenderText(const Graphics::ShaderProgram &s, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color) {
+RenderText(const Graphics::ShaderProgram &s, const Graphics::Font &font, std::string text, GLfloat x, GLfloat y,
+           GLfloat scale, glm::vec3 color) {
   // Activate corresponding render state
   s.Use();
   s.SetUniform3f("textColor", color);
   glActiveTexture(GL_TEXTURE0);
   glBindVertexArray(text_vao);
 
+  const auto& characters = font.GetCharacters();
+
   // Iterate through all characters
   std::string::const_iterator c;
   for (c = text.begin(); c != text.end(); c++) {
-    Character ch = characters[*c];
+    Graphics::Font::Character ch = characters.at(*c);
 
     GLfloat xpos = x + ch.bearing.x * scale;
     GLfloat ypos = y - (ch.size.y - ch.bearing.y) * scale;
@@ -117,46 +111,10 @@ int main() {
 
   FT_Library ft;
   if (FT_Init_FreeType(&ft)) printf("Could not init FreeType\n");
-
-  FT_Face face;
-  if (FT_New_Face(ft, "../fonts/arial.ttf", 0, &face)) printf("Failed to load arial.ttf\n");
-
-  FT_Set_Pixel_Sizes(face, 0, 48);
-  if (FT_Load_Char(face, 'X', FT_LOAD_RENDER)) printf("Failed to load Glyph\n");
-
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-  for (GLubyte c = 0; c < 128; c++) {
-    if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
-      printf("Failed to load Glyph %uc\n", c);
-      continue;
-    }
-
-    unsigned texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(
-        GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE,
-        face->glyph->bitmap.buffer
-    );
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // Now store character for later use
-    Character character{
-        texture,
-        glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-        glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-        static_cast<unsigned int>(face->glyph->advance.x)
-    };
-    characters.insert({c, character});
-  }
-
-  FT_Done_Face(face);
+  Graphics::Font arial{"../fonts/arial.ttf", 24, ft};
   FT_Done_FreeType(ft);
 
+  // Font stuff
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -201,7 +159,7 @@ int main() {
 
     text_shader_program.Use();
     text_shader_program.SetUniformMat4f("view", view);
-    RenderText(text_shader_program, "Test tekstu gxyzzurwqdf", .0f, 0.0f, 1.0f,
+    RenderText(text_shader_program, arial, "Test tekstu gxyzzurwqdf", .0f, 0.0f, 1.0f,
                glm::vec3((std::sin(glfwGetTime()) + 1) / 2, (std::cos(glfwGetTime() + 1) / 2),
                          std::sin(glfwGetTime())));
 
