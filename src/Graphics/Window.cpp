@@ -51,6 +51,7 @@ namespace sge {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwSwapInterval(1);
     return true;
   }
 
@@ -71,6 +72,7 @@ namespace sge {
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
       return false;
     }
+
 
     glViewport(0, 0, _width, _height);
     glEnable(GL_DEPTH_TEST);
