@@ -9,6 +9,7 @@
 #include "Input/Input.hpp"
 #include "Camera.hpp"
 #include "Graphics/FontRenderer.hpp"
+#include "Graphics/RectangleRenderer.hpp"
 
 using namespace sge;
 
@@ -81,6 +82,8 @@ int main() {
   text_shader_program.SetUniformMat4f("projection", projection);
   text_shader_program.SetUniformMat4f("view", view);
 
+  Graphics::RectangleRenderer rectangle_renderer{shader_program};
+
   float t = 0.f;
   float dt = 1.0f / 60.f;
   while (!Window::Instance()->ShouldClose()) {
@@ -89,7 +92,7 @@ int main() {
     HandleInput(dt);
 
     view = camera.View();
-    model = glm::rotate(model, glm::radians(0.05f), {.0f, .0f, 1.f});
+    model = glm::rotate(glm::mat4(1.0f), glm::radians((float)glfwGetTime()) * dt * 500.0f, {.0f, .0f, 1.f});
 
     shader_program.Use();
     shader_program.SetUniformMat4f("view", view);
@@ -99,11 +102,20 @@ int main() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
+    model = glm::mat4(1.0f);
+    shader_program.SetUniformMat4f("model", model);
+
     text_shader_program.Use();
     text_shader_program.SetUniformMat4f("view", view);
     font_renderer.Render("ddddTest tekstu yzxvbniJQ", {.0f, .0f}, 1.0f,
                          glm::vec3((std::sin(glfwGetTime()) + 1) / 2, (std::cos(glfwGetTime() + 1) / 2),
                                    std::sin(glfwGetTime())));
+
+    shader_program.Use();
+    // Button ?
+    rectangle_renderer.Draw({300.f, 200.f}, {50.f, 50.f}, {.3f, .7f, .9f});
+    font_renderer.Render("Przycisk", {50.f + (300.f/2.f) - (48.f/2), 50.f + (200.f/2.f) - (48.f / 2.f)}, 1.0f, {0.f, 0.f, 0.f});
+
     t += dt;
     Window::Instance()->Update();
   }
