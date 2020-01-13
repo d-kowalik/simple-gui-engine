@@ -12,7 +12,7 @@
 
 using namespace sge;
 
-Camera camera{0.5f};
+Camera camera{10.f};
 
 void HandleInput(float delta) {
   if (Input::IsKeyPressed(Key::ESCAPE)) Window::Instance()->Close();
@@ -81,10 +81,12 @@ int main() {
   text_shader_program.SetUniformMat4f("projection", projection);
   text_shader_program.SetUniformMat4f("view", view);
 
+  float t = 0.f;
+  float dt = 1.0f / 60.f;
   while (!Window::Instance()->ShouldClose()) {
     Window::Instance()->Clear();
 
-    HandleInput(1.0f);
+    HandleInput(dt);
 
     view = camera.View();
     model = glm::rotate(model, glm::radians(0.05f), {.0f, .0f, 1.f});
@@ -102,7 +104,7 @@ int main() {
     font_renderer.Render("ddddTest tekstu yzxvbniJQ", {.0f, .0f}, 1.0f,
                          glm::vec3((std::sin(glfwGetTime()) + 1) / 2, (std::cos(glfwGetTime() + 1) / 2),
                                    std::sin(glfwGetTime())));
-
+    t += dt;
     Window::Instance()->Update();
   }
 
