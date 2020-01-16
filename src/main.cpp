@@ -29,12 +29,20 @@ class Program : public sge::Application {
     if (Input::IsKeyPressed(Key::W)) _camera->Move(Camera::Direction::UP, delta);
     if (Input::IsKeyPressed(Key::S)) _camera->Move(Camera::Direction::DOWN, delta);
 
-    DrawText("ddddTest tekstu yzxvbniJQ", {.0f, .0f}, 1.0f,
-                           glm::vec3((std::sin(glfwGetTime()) + 1) / 2, (std::cos(glfwGetTime() + 1) / 2),
-                                     std::sin(glfwGetTime())));
+    int w = Window::Instance()->GetWidth();
+    int h = Window::Instance()->GetHeight();
+    int field_size = 32.0f;
+    int margin = 6.0f;
+    int fields_w = w/(field_size+margin);
+    int fields_h = h/(field_size+margin);
 
-    DrawRectangle({300.f, 200.f}, {50.f, 50.f}, {.3f, .7f, .9f});
-    DrawText("Przycisk", {50.f + (300.f/2.f) - 48.f, 50.f + (200.f/2.f) - (48.f / 2.f)}, 1.0f, {0.f, 0.f, 0.f});
+    for (int x = 0; x < fields_w; x++) {
+      for (int y = 0; y < fields_h; y++) {
+        DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
+                                                 (margin * (y+1) + field_size * y)}, {.0f, .0f, .0f});
+      }
+    }
+
   }
 };
 

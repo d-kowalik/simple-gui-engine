@@ -32,6 +32,9 @@ namespace sge {
 
     void Close() const;
 
+    inline int GetWidth() const { return _width; }
+    inline int GetHeight() const { return _height; }
+
     GLFWwindow* GetNativeHandle() const { return _window; }
 
     static Window* Instance() { return _instance; }
