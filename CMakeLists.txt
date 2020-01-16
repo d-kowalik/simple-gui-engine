@@ -3,6 +3,7 @@ project(SimpleGUIEngine)
 set(CXX g++)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 set(CMAKE_CXX_STANDARD 17)
+set(OpenGL_GL_PREFERENCE GLVND)
 
 # Add source files
 file(GLOB_RECURSE SOURCE_FILES 
@@ -37,7 +38,7 @@ find_library(FREETYPE freetype lib)
 add_library(GLAD "thirdparty/glad.c")
 
 # Put all libraries into a variable
-set(LIBS glfw3 opengl32 GLAD ${FREETYPE})
+set(LIBS glfw GL GLAD ${FREETYPE} dl)
 
 # Define the include DIRs
 include_directories(
@@ -47,11 +48,3 @@ include_directories(
 
 # Define the link libraries
 target_link_libraries(${PROJECT_NAME} ${LIBS})
-
-# # Copy dlls
-# if(WIN32)
-# 	add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-# 		COMMAND ${CMAKE_COMMAND} -E copy_directory
-# 		"${PROJECT_SOURCE_DIR}/dlls"
-# 		$<TARGET_FILE_DIR:${PROJECT_NAME}>)
-# endif()
