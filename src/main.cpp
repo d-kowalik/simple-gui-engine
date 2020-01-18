@@ -18,8 +18,26 @@ using namespace sge;
 class Program : public sge::Application {
   using sge::Application::Application;
 
-  bool OnCreate() override {
+  std::vector<std::vector<int>> _board{};
+  int field_size = 32.0f;
+  int margin = 6.0f;
+  int fields_w = 0, fields_h = 0;
 
+  bool OnCreate() override {
+    int w = Window::Instance()->GetWidth();
+    int h = Window::Instance()->GetHeight();
+    fields_w = w/(field_size+margin);
+    fields_h = h/(field_size+margin);
+    _board.reserve(fields_w);
+    for (auto& board : _board) {
+      board.reserve(fields_h);
+    }
+
+    _board = std::vector<std::vector<int>>(fields_w, std::vector<int>(fields_h, 0));
+
+    _board[3][3] = 1;
+
+    return true;
   }
 
   bool OnUpdate(float delta) override {
@@ -29,20 +47,20 @@ class Program : public sge::Application {
     if (Input::IsKeyPressed(Key::W)) _camera->Move(Camera::Direction::UP, delta);
     if (Input::IsKeyPressed(Key::S)) _camera->Move(Camera::Direction::DOWN, delta);
 
-    int w = Window::Instance()->GetWidth();
-    int h = Window::Instance()->GetHeight();
-    int field_size = 32.0f;
-    int margin = 6.0f;
-    int fields_w = w/(field_size+margin);
-    int fields_h = h/(field_size+margin);
 
-    for (int x = 0; x < fields_w; x++) {
-      for (int y = 0; y < fields_h; y++) {
-        DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
-                                                 (margin * (y+1) + field_size * y)}, {.0f, .0f, .0f});
+    for (int y = 0; y < fields_h; y++) {
+      for (int x = 0; x < fields_w; x++) {
+        if (_board[x][y] == 1) {
+          DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
+                                                   (margin * (y+1) + field_size * y)}, {.9f, .0f, .6f});
+        } else {
+          DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
+                                                   (margin * (y+1) + field_size * y)}, {.0f, .0f, .0f});
+        }
       }
     }
 
+    return true;
   }
 };
 
