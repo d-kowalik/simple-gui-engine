@@ -29,7 +29,7 @@ sge::Application::Application(const std::string &title, int width, int height) {
   FT_Done_FreeType(ft);
 
   _view = _camera->View();
-  _projection = glm::ortho(0.0f, 640.f, 0.0f, 480.f, 0.1f, 10.0f);
+  _projection = glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 10.0f);
   _model = glm::mat4(1.0f);
 
   _rectangle_program->Use();
