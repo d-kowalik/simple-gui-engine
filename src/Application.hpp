@@ -31,6 +31,7 @@ namespace sge {
     void DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color) const;
     void DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color, std::function<void(float, float)> callback);
     void DrawText(const std::string &text, glm::vec2 position, float scale, glm::vec3 color) const;
+    void HandleMouseClick(float x, float y);
   };
 }
 

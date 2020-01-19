@@ -4,6 +4,7 @@
 
 namespace sge {
   void framebuffer_size_callback(GLFWwindow *window, int w, int h);
+  void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
   Window *Window::_instance = nullptr;
 
@@ -30,6 +31,17 @@ namespace sge {
     auto *win = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
     win->Resize(w, h);
   }
+
+  void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+    auto *win = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+    if ((action == GLFW_PRESS || action == GLFW_REPEAT) && button == GLFW_MOUSE_BUTTON_1) {
+      double x, y;
+      glfwGetCursorPos(window, &x, &y);
+      y = std::abs(win->GetHeight() - y);
+      win->OnMouseClick(x, y);
+    }
+  }
+
 
   void Window::Resize(int w, int h) {
     _width = w;
@@ -64,7 +76,7 @@ namespace sge {
     glfwMakeContextCurrent(_window);
     glfwSetWindowUserPointer(_window, this);
     glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
-
+    glfwSetMouseButtonCallback(_window, mouse_button_callback);
     return true;
   }
 

@@ -44,6 +44,8 @@ sge::Application::Application(const std::string &title, int width, int height) {
   _rectangle_renderer = new Graphics::RectangleRenderer {*_rectangle_program};
 
   _instance = this;
+
+  Window::Instance()->OnMouseClick += std::bind(&Application::HandleMouseClick, this, std::placeholders::_1, std::placeholders::_2);
 }
 
 void sge::Application::Run() {
@@ -70,7 +72,7 @@ void sge::Application::Run() {
 
 void sge::Application::DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color,
                                      std::function<void(float, float)> callback) {
-  _click_bounds.emplace_back(glm::vec4{scale.x, scale.y, scale.x + pos.x, scale.y + pos.y}, callback);
+  _click_bounds.emplace_back(glm::vec4{pos.x, pos.y, scale.x + pos.x, scale.y + pos.y}, callback);
   DrawRectangle(scale, pos, color);
 }
 
@@ -91,6 +93,15 @@ sge::Application::~Application() {
   delete _rectangle_program;
   delete _camera;
   Window::Destroy();
+}
+
+void sge::Application::HandleMouseClick(float x, float y) {
+  for (const auto& [points, func] : _click_bounds) {
+    if (x >= points.x && x <= points.z && y >= points.y && y <= points.w) {
+      printf("xe(%f, %f), ye(%f, %f)\n", points.x, points.z, points.y, points.w);
+      func(x, y);
+    }
+  }
 }
 
 

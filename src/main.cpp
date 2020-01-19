@@ -180,13 +180,17 @@ class Program : public sge::Application {
                                                    (margin * (y + 1) + field_size * y)}, {.7f, .7f, .0f});
         } else if (_board[x][y] == 0) {
           DrawRectangle({field_size, field_size}, {(margin * (x + 1) + field_size * x),
-                                                   (margin * (y + 1) + field_size * y)}, {.0f, .0f, .0f});
+                                                   (margin * (y + 1) + field_size * y)}, {.0f, .0f, .0f}, [=](float _1, float _2) {
+            _board[x][y] = 1;
+          });
         } else if (visited[x][y]) {
           DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
                                                    (margin * (y+1) + field_size * y)}, {.6f, .4f, .9f});
         } else {
           DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
-                                                   (margin * (y+1) + field_size * y)}, {.0f, .8f, .3f});
+                                                   (margin * (y+1) + field_size * y)}, {.0f, .8f, .3f}, [=](float _1, float _2) {
+            _board[x][y] = 0;
+          });
         }
       }
     }

@@ -1,11 +1,17 @@
 #include <glad/glad.h>
 
+#include "../Util/Callback.hpp"
+
 #include <GLFW/glfw3.h>
 
 #include <string>
+#include <functional>
 
 namespace sge {
   class Window {
+  public:
+    using OnMouseClickEvent = std::function<void(float, float)>;
+    Util::Callback<float, float> OnMouseClick;
   private:
     static Window* _instance;
 
