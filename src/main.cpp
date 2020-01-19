@@ -29,13 +29,7 @@ struct Point {
   int x, y, distance = 0;
 
   friend bool operator<(const Point &l, const Point &r) {
-    if (l.distance <= r.distance)
-      return true;
-    return false;
-    if (l.distance == r.distance)
-      if (l.x < r.x)
-        return true;
-    return l.y < r.y;
+    return l.distance <= r.distance;
   }
 };
 
