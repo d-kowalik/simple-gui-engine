@@ -64,7 +64,14 @@ void sge::Application::Run() {
 
     t += dt;
     Window::Instance()->Update();
+    _click_bounds.clear();
   }
+}
+
+void sge::Application::DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color,
+                                     std::function<void(float, float)> callback) {
+  _click_bounds.emplace_back(glm::vec4{scale.x, scale.y, scale.x + pos.x, scale.y + pos.y}, callback);
+  DrawRectangle(scale, pos, color);
 }
 
 void sge::Application::DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color) const {
@@ -85,3 +92,5 @@ sge::Application::~Application() {
   delete _camera;
   Window::Destroy();
 }
+
+
