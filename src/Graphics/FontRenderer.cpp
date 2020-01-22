@@ -60,3 +60,16 @@ void sge::Graphics::FontRenderer::Render(const std::string &text, glm::vec2 posi
   glBindVertexArray(0);
   glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+glm::vec2 sge::Graphics::FontRenderer::CheckSize(const std::string& text, float scale) {
+  if (text.length() == 0) return {0, 0};
+  float width = 0, height = 0;
+  const auto& characters = _font.GetCharacters();
+  height = characters.at(text[0]).size.y * scale;
+  printf("!!!!!!!!!!!%f\n", height);
+  for (const auto& c : text) {
+    Graphics::Font::Character ch = characters.at(c);
+    width += (ch.advance >> 6) * scale;
+  }
+  return {width, height};
+}

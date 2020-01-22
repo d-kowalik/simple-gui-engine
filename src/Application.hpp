@@ -10,7 +10,7 @@
 namespace sge {
   class Application {
     inline static Application* _instance = nullptr;
-  protected:
+  public:
     Graphics::FontRenderer* _font_renderer = nullptr;
     Graphics::RectangleRenderer* _rectangle_renderer = nullptr;
     Graphics::ShaderProgram *_font_program = nullptr, *_rectangle_program = nullptr;
