@@ -11,7 +11,9 @@ namespace sge {
   class Window {
   public:
     using OnMouseClickEvent = std::function<void(float, float)>;
+    using OnResizeEvent = std::function<void(int, int)>;
     Util::Callback<float, float> OnMouseClick;
+    Util::Callback<int, int> OnResize;
   private:
     static Window* _instance;
 

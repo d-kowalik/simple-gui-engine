@@ -43,6 +43,7 @@ namespace sge {
     void DrawText(const std::string &text, glm::vec2 position, float scale, glm::vec3 color) const;
 
     void HandleMouseClick(float x, float y);
+    void HandleResize(int x, int y);
   };
 }
 

@@ -48,6 +48,7 @@ sge::Application::Application(const std::string &title, int width, int height) {
   _instance = this;
 
   Window::Instance()->OnMouseClick += std::bind(&Application::HandleMouseClick, this, std::placeholders::_1, std::placeholders::_2);
+  Window::Instance()->OnResize += std::bind(&Application::HandleResize, this, std::placeholders::_1, std::placeholders::_2);
 }
 
 void sge::Application::Run() {
@@ -116,6 +117,14 @@ void sge::Application::DrawButton(const std::string &text, glm::vec2 position, g
   _click_bounds.emplace_back(glm::vec4{position.x, position.y, size.x + position.x, size.y + position.y}, callback);
   _rectangle_program->Use();
   _button_renderer->DrawButton(text, position, size, fill_color, text_color);
+}
+
+void sge::Application::HandleResize(int w, int h) {
+  _projection = glm::ortho(0.0f, (float)w, 0.0f, (float)h, 0.1f, 10.0f);
+  _rectangle_program->Use();
+  _rectangle_program->SetUniformMat4f("projection", _projection);
+  _font_program->Use();
+  _font_program->SetUniformMat4f("projection", _projection);
 }
 
 

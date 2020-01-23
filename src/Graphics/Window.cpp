@@ -47,6 +47,7 @@ namespace sge {
     _width = w;
     _height = h;
     glViewport(0, 0, w, h);
+    OnResize(w, h);
   }
 
   void Window::Clear() const {
