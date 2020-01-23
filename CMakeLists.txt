@@ -19,7 +19,7 @@ file(GLOB_RECURSE HEADER_FILES
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # Define the executable
-add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 find_package(OpenGL REQUIRED)
 
