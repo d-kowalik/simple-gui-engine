@@ -100,7 +100,6 @@ sge::Application::~Application() {
 void sge::Application::HandleMouseClick(float x, float y) {
   for (const auto& [points, func] : _click_bounds) {
     if (x >= points.x && x <= points.z && y >= points.y && y <= points.w) {
-      printf("xe(%f, %f), ye(%f, %f)\n", points.x, points.z, points.y, points.w);
       func(x, y);
     }
   }
