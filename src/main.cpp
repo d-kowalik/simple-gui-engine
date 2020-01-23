@@ -24,8 +24,11 @@ using std::set, std::pair, std::make_pair, std::stack;
 
 struct Point {
   Point() = default;
+
   Point(int x, int y) : x(x), y(y) {}
+
   Point(int x, int y, int dist) : x(x), y(y), distance(dist) {}
+
   int x, y, distance = 0;
 
   friend bool operator<(const Point &l, const Point &r) {
@@ -67,7 +70,7 @@ void calculate_path(Point dest, int dist) {
   putchar('\n');
 }
 
-bool dijkstra_check(std::vector<std::vector<int>>& graph, int x, int y, int current_x,
+bool dijkstra_check(std::vector<std::vector<int>> &graph, int x, int y, int current_x,
                     int current_y, int dist, Point dest) {
   if (is_in_bounds(x, y) && !visited[x][y]) {
     visited[x][y] = true;
@@ -100,10 +103,10 @@ class Program : public sge::Application {
   bool OnCreate() override {
     int w = Window::Instance()->GetWidth();
     int h = Window::Instance()->GetHeight();
-    fields_w = w/(field_size+margin);
-    fields_h = h/(field_size+margin);
+    fields_w = w / (field_size + margin);
+    fields_h = h / (field_size + margin);
     _board.reserve(fields_w);
-    for (auto& board : _board) {
+    for (auto &board : _board) {
       board.reserve(fields_h);
     }
     size_x = fields_w;
@@ -111,7 +114,8 @@ class Program : public sge::Application {
 
     _board = std::vector<std::vector<int>>(fields_w, std::vector<int>(fields_h, 1));
     visited = std::vector<std::vector<bool>>(fields_w, std::vector<bool>(fields_h, false));
-    previous_points = std::vector<std::vector<std::pair<int ,int>>>(fields_w, std::vector<std::pair<int, int>>(fields_h));
+    previous_points = std::vector<std::vector<std::pair<int, int>>>(fields_w,
+                                                                    std::vector<std::pair<int, int>>(fields_h));
 
 //    _board[3][3] = 2;
 
@@ -168,7 +172,7 @@ class Program : public sge::Application {
     if (Input::IsKeyPressed(Key::SPACE)) _started = true;
 
 
-    DrawButton("Button", {300.f, 300.f}, {400.f, 200.f}, {.5f, .5f, .5f}, {1.f, 1.f, 1.f}, [](float, float) {
+    DrawButton("Button", {300.f, 300.f}, {200.f, 100.f}, {.5f, .5f, .5f}, {1.f, 1.f, 1.f}, [](float, float) {
       printf("Button\n");
     });
 
@@ -185,17 +189,19 @@ class Program : public sge::Application {
                                                    (margin * (y + 1) + field_size * y)}, {.7f, .7f, .0f});
         } else if (_board[x][y] == 0) {
           DrawRectangle({field_size, field_size}, {(margin * (x + 1) + field_size * x),
-                                                   (margin * (y + 1) + field_size * y)}, {.0f, .0f, .0f}, [=](float _1, float _2) {
-            _board[x][y] = 1;
-          });
+                                                   (margin * (y + 1) + field_size * y)}, {.0f, .0f, .0f},
+                        [=](float _1, float _2) {
+                          _board[x][y] = 1;
+                        });
         } else if (visited[x][y]) {
-          DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
-                                                   (margin * (y+1) + field_size * y)}, {.6f, .4f, .9f});
+          DrawRectangle({field_size, field_size}, {(margin * (x + 1) + field_size * x),
+                                                   (margin * (y + 1) + field_size * y)}, {.6f, .4f, .9f});
         } else {
-          DrawRectangle({field_size, field_size}, {(margin * (x+1) + field_size * x),
-                                                   (margin * (y+1) + field_size * y)}, {.0f, .8f, .3f}, [=](float _1, float _2) {
-            _board[x][y] = 0;
-          });
+          DrawRectangle({field_size, field_size}, {(margin * (x + 1) + field_size * x),
+                                                   (margin * (y + 1) + field_size * y)}, {.0f, .8f, .3f},
+                        [=](float _1, float _2) {
+                          _board[x][y] = 0;
+                        });
         }
       }
     }
