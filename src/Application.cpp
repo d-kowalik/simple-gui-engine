@@ -43,6 +43,8 @@ sge::Application::Application(const std::string &title, int width, int height) {
 
   _rectangle_renderer = new Graphics::RectangleRenderer {*_rectangle_program};
 
+  _button_renderer = new Graphics::ButtonRenderer(_font_renderer, _rectangle_renderer);
+
   _instance = this;
 
   Window::Instance()->OnMouseClick += std::bind(&Application::HandleMouseClick, this, std::placeholders::_1, std::placeholders::_2);
@@ -102,6 +104,12 @@ void sge::Application::HandleMouseClick(float x, float y) {
       func(x, y);
     }
   }
+}
+
+void sge::Application::DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color,
+                                  glm::vec3 text_color) {
+  _rectangle_program->Use();
+  _button_renderer->DrawButton(text, position, size, fill_color, text_color);
 }
 
 

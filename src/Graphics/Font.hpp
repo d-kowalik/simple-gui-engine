@@ -26,5 +26,6 @@ namespace sge::Graphics {
     Font(const std::string& path, int size, FT_Library ft);
 
     const std::map<char, Character>& GetCharacters() const { return _characters; }
+    const int GetSize() const { return _size; }
   };
 }

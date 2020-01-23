@@ -168,6 +168,8 @@ class Program : public sge::Application {
     if (Input::IsKeyPressed(Key::SPACE)) _started = true;
 
 
+    DrawButton("Button", {300.f, 300.f}, {400.f, 200.f});
+
     auto size = _font_renderer->CheckSize("Button", 1);
     DrawRectangle({400.f, 200.f}, {50.f, 50.f}, {.9f, .0f, .0f});
     DrawText("Button", {50.f + 400.f/2 - size.x/2, 50.f + 200.f/2 - size.y/2}, 1.f, {0.f, 0.f, 0.f});
