@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-project(SimpleGUIEngine)
+project(sge)
 set(CXX g++)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 set(CMAKE_CXX_STANDARD 17)
 set(OpenGL_GL_PREFERENCE GLVND)
+
+add_compile_options("-fPIC")
 
 # Add source files
 file(GLOB_RECURSE SOURCE_FILES 
@@ -19,7 +21,7 @@ file(GLOB_RECURSE HEADER_FILES
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # Define the executable
-add_library(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES})
 
 find_package(OpenGL REQUIRED)
 
