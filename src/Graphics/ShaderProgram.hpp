@@ -9,10 +9,10 @@
 namespace sge::Graphics {
   class ShaderProgram {
     unsigned _id;
-    std::vector<Shader> _shaders{};
+    std::vector<Shader*> _shaders{};
 
   public:
-    ShaderProgram(const std::vector<Shader>& shaders);
+    ShaderProgram(const std::vector<Shader*>& shaders);
 
     void Use() const;
 

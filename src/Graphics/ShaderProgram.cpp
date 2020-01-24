@@ -4,11 +4,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace sge {
-  Graphics::ShaderProgram::ShaderProgram(const std::vector<Shader> &shaders) : _shaders(shaders) {
+  Graphics::ShaderProgram::ShaderProgram(const std::vector<Shader*> &shaders) : _shaders(shaders) {
     _id = glCreateProgram();
 
     for (const auto &shader : shaders)
-      glAttachShader(_id, shader.GetId());
+      glAttachShader(_id, shader->GetId());
     glLinkProgram(_id);
     int success = 0;
     glGetProgramiv(_id, GL_LINK_STATUS, &success);

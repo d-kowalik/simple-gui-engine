@@ -14,12 +14,56 @@ sge::Application::Application(const std::string &title, int width, int height) {
 
   _camera = new Camera{100.f};
 
-  const auto vertex_shader = Graphics::Shader(GL_VERTEX_SHADER, "../src/Shaders/flat_color.vert");
-  const auto fragment_shader = Graphics::Shader(GL_FRAGMENT_SHADER, "../src/Shaders/flat_color.frag");
+  const auto vertex_shader = Graphics::Shader::CreateFromRawData(GL_VERTEX_SHADER, "#version 330 core\n"
+                                                                                   "\n"
+                                                                                   "layout (location = 0) in vec3 position;\n"
+                                                                                   "layout (location = 1) in vec3 color;\n"
+                                                                                   "\n"
+                                                                                   "uniform mat4 model;\n"
+                                                                                   "uniform mat4 view;\n"
+                                                                                   "uniform mat4 projection;\n"
+                                                                                   "\n"
+                                                                                   "out vec3 Color;\n"
+                                                                                   "\n"
+                                                                                   "void main() {\n"
+                                                                                   "    gl_Position = projection * view * model * vec4(position, 1.0);\n"
+                                                                                   "    Color = color;\n"
+                                                                                   "}");
+  const auto fragment_shader = Graphics::Shader::CreateFromRawData(GL_FRAGMENT_SHADER, "#version 330 core\n"
+                                                                    "\n"
+                                                                    "in vec3 Color;\n"
+                                                                    "\n"
+                                                                    "out vec4 FinalColor;\n"
+                                                                    "\n"
+                                                                    "void main() {\n"
+                                                                    "    FinalColor = vec4(Color, 1.0);\n"
+                                                                    "}");
   _rectangle_program =new  Graphics::ShaderProgram({vertex_shader, fragment_shader});
 
-  const auto text_vertex_shader = Graphics::Shader(GL_VERTEX_SHADER, "../src/Shaders/text.vert");
-  const auto text_fragment_shader = Graphics::Shader(GL_FRAGMENT_SHADER, "../src/Shaders/text.frag");
+  const auto text_vertex_shader = Graphics::Shader::CreateFromRawData(GL_VERTEX_SHADER, "#version 330 core\n"
+                                                                     "\n"
+                                                                     "layout (location = 0) in vec4 vertex;\n"
+                                                                     "out vec2 TexCoords;\n"
+                                                                     "\n"
+                                                                     "uniform mat4 projection;\n"
+                                                                     "uniform mat4 view;\n"
+                                                                     "\n"
+                                                                     "void main() {\n"
+                                                                     "    gl_Position = projection * view * vec4(vertex.xy, 1.f, 1.f);\n"
+                                                                     "    TexCoords = vertex.zw;\n"
+                                                                     "}");
+  const auto text_fragment_shader = Graphics::Shader::CreateFromRawData(GL_FRAGMENT_SHADER, "#version 330 core\n"
+                                                                         "\n"
+                                                                         "in vec2 TexCoords;\n"
+                                                                         "out vec4 color;\n"
+                                                                         "\n"
+                                                                         "uniform sampler2D text;\n"
+                                                                         "uniform vec3 textColor;\n"
+                                                                         "\n"
+                                                                         "void main() {\n"
+                                                                         "    vec4 sampled = vec4(1.f, 1.f, 1.f, texture(text, TexCoords).r);\n"
+                                                                         "    color = vec4(textColor, 1.f) * sampled;\n"
+                                                                         "}");
   _font_program = new Graphics::ShaderProgram({text_vertex_shader, text_fragment_shader});
 
   FT_Library ft;
