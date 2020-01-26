@@ -6,6 +6,7 @@
 #include "Camera.hpp"
 #include "Util/Callback.hpp"
 #include "Graphics/ButtonRenderer.hpp"
+#include "Util/Timer.hpp"
 
 namespace sge {
   class Application {
@@ -18,6 +19,7 @@ namespace sge {
     Camera *_camera;
     glm::mat4 _view, _model, _projection;
     std::vector<std::pair<glm::vec4, std::function<void(float, float)>>> _click_bounds{};
+    Util::Timer _timer{};
   public:
     explicit Application(const std::string &title, int width, int height);
 

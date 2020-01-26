@@ -101,4 +101,11 @@ namespace sge {
     if (_instance != nullptr)
       delete Window::_instance;
   }
+
+  void Window::UpdateTitle(unsigned fps) {
+    if (_last_fps == fps) return;
+    _last_fps = fps;
+    std::string newTitle{ _title + " | " + std::to_string(fps) + "fps" };
+    glfwSetWindowTitle(_window, newTitle.c_str());
+  }
 } // namespace sge

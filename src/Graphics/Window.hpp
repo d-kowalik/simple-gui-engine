@@ -16,6 +16,7 @@ namespace sge {
     Util::Callback<int, int> OnResize;
   private:
     static Window* _instance;
+    unsigned _last_fps = 0;
 
     GLFWwindow *_window;
     int _width, _height;
@@ -51,5 +52,7 @@ namespace sge {
     static void Destroy();
 
     friend void framebuffer_size_callback(GLFWwindow *window, int w, int h);
+
+    void UpdateTitle(unsigned int fps);
   };
 } // namespace sge

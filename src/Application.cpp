@@ -98,11 +98,11 @@ sge::Application::Application(const std::string &title, int width, int height) {
 void sge::Application::Run() {
   OnCreate();
 
-  float t = 0.f;
-  float dt = 1.0f / 60.f;
   while (!Window::Instance()->ShouldClose()) {
+    _timer.Tick();
+    Window::Instance()->UpdateTitle(_timer.GetFPS());
     Window::Instance()->Clear();
-    OnUpdate(dt);
+    OnUpdate(_timer.GetDelta());
 
     _view = _camera->View();
     _rectangle_program->Use();
@@ -111,7 +111,6 @@ void sge::Application::Run() {
     _font_program->SetUniformMat4f("view", _view);
 
 
-    t += dt;
     Window::Instance()->Update();
     _click_bounds.clear();
   }
