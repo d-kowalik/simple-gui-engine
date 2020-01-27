@@ -19,7 +19,11 @@ sge::Graphics::RectangleRenderer::RectangleRenderer(const sge::Graphics::ShaderP
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
-void sge::Graphics::RectangleRenderer::Draw(glm::vec2 scale, glm::vec2 pos, glm::vec3 color) {
+void sge::Graphics::RectangleRenderer::Draw(const sge::Graphics::Rectangle &rectangle) {
+  const auto color = rectangle.color;
+  const auto pos = rectangle.position;
+  const auto scale = rectangle.scale;
+
   float vertices[] = {
       pos.x, pos.y, .5f, color.x, color.y, color.z,
       pos.x, pos.y + scale.y, .5f, color.x, color.y, color.z,

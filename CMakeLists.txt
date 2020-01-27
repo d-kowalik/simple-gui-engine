@@ -21,7 +21,7 @@ file(GLOB_RECURSE HEADER_FILES
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # Define the executable
-add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES} src/Util/Timer.hpp)
+add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES} src/Util/Timer.hpp src/Graphics/Rectangle.hpp src/Graphics/RectangleDefaults.hpp)
 
 find_package(OpenGL REQUIRED)
 

@@ -116,15 +116,17 @@ void sge::Application::Run() {
   }
 }
 
-void sge::Application::DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color,
+void sge::Application::DrawRectangle(const Graphics::Rectangle& rectangle,
                                      std::function<void(float, float)> callback) {
+  const auto pos = rectangle.position;
+  const auto scale = rectangle.scale;
   _click_bounds.emplace_back(glm::vec4{pos.x, pos.y, scale.x + pos.x, scale.y + pos.y}, callback);
-  DrawRectangle(scale, pos, color);
+  DrawRectangle(rectangle);
 }
 
-void sge::Application::DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color) const {
+void sge::Application::DrawRectangle(const Graphics::Rectangle& rectangle) const {
   _rectangle_program->Use();
-  _rectangle_renderer->Draw(scale, pos, color);
+  _rectangle_renderer->Draw(rectangle);
 }
 
 void sge::Application::DrawText(const std::string &text, glm::vec2 position, float scale, glm::vec3 color) const {
