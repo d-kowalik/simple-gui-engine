@@ -150,16 +150,16 @@ void sge::Application::HandleMouseClick(float x, float y) {
 }
 
 void sge::Application::DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color,
-                                  glm::vec3 text_color) {
+                                  glm::vec3 text_color, float text_scale) {
   _rectangle_program->Use();
-  _button_renderer->DrawButton(text, position, size, fill_color, text_color);
+  _button_renderer->DrawButton(text, position, size, fill_color, text_color, text_scale);
 }
 
-void sge::Application::DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color,
+void sge::Application::DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color, float text_scale,
                                   glm::vec3 text_color, std::function<void(float, float)> callback) {
   _click_bounds.emplace_back(glm::vec4{position.x, position.y, size.x + position.x, size.y + position.y}, callback);
   _rectangle_program->Use();
-  _button_renderer->DrawButton(text, position, size, fill_color, text_color);
+  _button_renderer->DrawButton(text, position, size, fill_color, text_color, text_scale);
 }
 
 void sge::Application::HandleResize(int w, int h) {

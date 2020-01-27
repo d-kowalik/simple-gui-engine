@@ -7,9 +7,8 @@ sge::Graphics::ButtonRenderer::ButtonRenderer(sge::Graphics::FontRenderer *font_
 }
 
 void sge::Graphics::ButtonRenderer::DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size,
-                                               glm::vec3 fill_color, glm::vec3 text_color) {
+                                               glm::vec3 fill_color, glm::vec3 text_color, float text_scale) {
   auto height = _font_renderer->GetFont().GetSize();
-  const float text_scale = std::min(std::min(size.x / (float)(height * text.size()), size.y / height), 1.f);
   auto final_size = _font_renderer->CheckSize(text, text_scale);
   _rectangle_renderer->Draw(size, position, fill_color);
 

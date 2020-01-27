@@ -38,8 +38,8 @@ namespace sge {
     void DrawRectangle(glm::vec2 scale, glm::vec2 pos, glm::vec3 color, std::function<void(float, float)> callback);
 
     void DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color = {0.f, 0.f, 0.f},
-                    glm::vec3 text_color = {1.f, 1.f, 1.f});
-    void DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color,
+                    glm::vec3 text_color = {1.f, 1.f, 1.f}, float text_scale = 1.f);
+    void DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color, float text_scale,
                     glm::vec3 text_color, std::function<void(float, float)> callback);
 
     void DrawText(const std::string &text, glm::vec2 position, float scale, glm::vec3 color) const;
