@@ -129,9 +129,9 @@ void sge::Application::DrawRectangle(const Graphics::Rectangle& rectangle) const
   _rectangle_renderer->Draw(rectangle);
 }
 
-void sge::Application::DrawText(const std::string &text, glm::vec2 position, float scale, glm::vec3 color) const {
+void sge::Application::DrawText(const Graphics::Text &text) const {
   _font_program->Use();
-  _font_renderer->Render(text, position, scale, color);
+  _font_renderer->Render(text);
 }
 
 sge::Application::~Application() {
@@ -171,5 +171,4 @@ void sge::Application::HandleResize(int w, int h) {
   _font_program->Use();
   _font_program->SetUniformMat4f("projection", _projection);
 }
-
 

@@ -2,6 +2,7 @@
 
 #include "Font.hpp"
 #include "ShaderProgram.hpp"
+#include "Text.hpp"
 
 namespace sge::Graphics {
   class FontRenderer {
@@ -12,8 +13,8 @@ namespace sge::Graphics {
   public:
     FontRenderer(const Font& font, const ShaderProgram& program);
 
-    void Render(const std::string& text, glm::vec2 position, float scale, glm::vec3 color);
-    glm::vec2 CheckSize(const std::string& text, float scale);
+    void Render(const Text& text);
+    glm::vec2 CheckSize(const Text& text);
     const Font& GetFont() const { return _font; }
   };
 }
