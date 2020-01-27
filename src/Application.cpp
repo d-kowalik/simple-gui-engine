@@ -155,8 +155,8 @@ void sge::Application::DrawButton(const std::string &text, glm::vec2 position, g
   _button_renderer->DrawButton(text, position, size, fill_color, text_color, text_scale);
 }
 
-void sge::Application::DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color, float text_scale,
-                                  glm::vec3 text_color, std::function<void(float, float)> callback) {
+void sge::Application::DrawButton(const std::string &text, glm::vec2 position, glm::vec2 size, glm::vec3 fill_color,
+                                  glm::vec3 text_color, float text_scale, std::function<void(float, float)> callback) {
   _click_bounds.emplace_back(glm::vec4{position.x, position.y, size.x + position.x, size.y + position.y}, callback);
   _rectangle_program->Use();
   _button_renderer->DrawButton(text, position, size, fill_color, text_color, text_scale);
