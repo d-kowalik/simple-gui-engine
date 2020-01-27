@@ -116,14 +116,6 @@ void sge::Application::Run() {
   }
 }
 
-void sge::Application::DrawRectangle(const Graphics::Rectangle& rectangle,
-                                     std::function<void(float, float)> callback) {
-  const auto pos = rectangle.position;
-  const auto scale = rectangle.scale;
-  _click_bounds.emplace_back(glm::vec4{pos.x, pos.y, scale.x + pos.x, scale.y + pos.y}, callback);
-  DrawRectangle(rectangle);
-}
-
 void sge::Application::DrawRectangle(const Graphics::Rectangle& rectangle) const {
   _rectangle_program->Use();
   _rectangle_renderer->Draw(rectangle);

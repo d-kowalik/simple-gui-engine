@@ -35,12 +35,10 @@ namespace sge {
 
     void DrawRectangle(const Graphics::Rectangle& rectangle = Graphics::Rectangle{}) const;
 
-    void DrawRectangle(const Graphics::Rectangle& rectangle, std::function<void(float, float)> callback);
+    void DrawText(const Graphics::Text& text) const;
 
     void DrawButton(const Graphics::Button& button);
     void DrawButton(const Graphics::Button& button, std::function<void(float, float)> callback);
-
-    void DrawText(const Graphics::Text& text) const;
 
     void HandleMouseClick(float x, float y);
     void HandleResize(int x, int y);
