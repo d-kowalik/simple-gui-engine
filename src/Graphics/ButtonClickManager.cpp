@@ -4,6 +4,8 @@
 
 #include "ButtonClickManager.hpp"
 
+#include "ToggleButton.hpp"
+
 #include "Window.hpp"
 
 #include <functional>
@@ -14,14 +16,31 @@ sge::Graphics::ButtonClickManager::ButtonClickManager() {
 }
 
 void sge::Graphics::ButtonClickManager::HandleClick(float x, float y) {
-  for (const auto button : _buttons) {
+  bool toggle_check = false;
+  for (Graphics::Button* button : _buttons) {
     if (x >= button->position.x && y >= button->position.y && x <= button->position.x + button->scale.x &&
-        y <= button->position.y + button->scale.y)
+        y <= button->position.y + button->scale.y) {
+      if (dynamic_cast<Graphics::ToggleButton *>(button) != nullptr)  {
+        toggle_check = true;
+        dynamic_cast<Graphics::ToggleButton *>(button)->toggled = true;
+      }
       button->callback(x, y);
+    }
+  }
+
+  if (toggle_check) {
+    for (Graphics::Button* button : _buttons) {
+      if (!(x >= button->position.x && y >= button->position.y && x <= button->position.x + button->scale.x &&
+          y <= button->position.y + button->scale.y)) {
+        if (dynamic_cast<Graphics::ToggleButton *>(button) != nullptr)  {
+          dynamic_cast<Graphics::ToggleButton *>(button)->toggled = false;
+        }
+      }
+    }
   }
 }
 
-void sge::Graphics::ButtonClickManager::Add(const sge::Graphics::Button *button) {
+void sge::Graphics::ButtonClickManager::Add(sge::Graphics::Button *button) {
   _buttons.push_back(button);
 }
 

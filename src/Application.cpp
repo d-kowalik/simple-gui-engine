@@ -88,10 +88,10 @@ sge::Application::Application(const std::string &title, int width, int height) {
   _rectangle_renderer = new Graphics::RectangleRenderer {*_rectangle_program};
 
   _button_renderer = new Graphics::ButtonRenderer(_font_renderer, _rectangle_renderer);
+  _button_click_manager = new Graphics::ButtonClickManager();
 
   _instance = this;
 
-  Window::Instance()->OnMouseClick += std::bind(&Application::HandleMouseClick, this, std::placeholders::_1, std::placeholders::_2);
   Window::Instance()->OnResize += std::bind(&Application::HandleResize, this, std::placeholders::_1, std::placeholders::_2);
 }
 
@@ -110,9 +110,8 @@ void sge::Application::Run() {
     _font_program->Use();
     _font_program->SetUniformMat4f("view", _view);
 
-
+    _button_click_manager->Clear();
     Window::Instance()->Update();
-    _click_bounds.clear();
   }
 }
 
@@ -135,14 +134,6 @@ sge::Application::~Application() {
   Window::Destroy();
 }
 
-void sge::Application::HandleMouseClick(float x, float y) {
-  for (const auto& [points, func] : _click_bounds) {
-    if (x >= points.x && x <= points.z && y >= points.y && y <= points.w) {
-      func(x, y);
-    }
-  }
-}
-
 void sge::Application::HandleResize(int w, int h) {
   _projection = glm::ortho(0.0f, (float)w, 0.0f, (float)h, 0.1f, 10.0f);
   _rectangle_program->Use();
@@ -151,16 +142,9 @@ void sge::Application::HandleResize(int w, int h) {
   _font_program->SetUniformMat4f("projection", _projection);
 }
 
-void sge::Application::DrawButton(const sge::Graphics::Button &button) {
+void sge::Application::DrawButton(sge::Graphics::Button* button) {
   _rectangle_program->Use();
-  _button_renderer->DrawButton(button);
-}
-
-void sge::Application::DrawButton(const sge::Graphics::Button &button, std::function<void(float, float)> callback) {
-  const auto position = button.position;
-  const auto size = button.scale;
-  _click_bounds.emplace_back(glm::vec4{position.x, position.y, size.x + position.x, size.y + position.y}, callback);
-  _rectangle_program->Use();
-  _button_renderer->DrawButton(button);
+  _button_renderer->DrawButton(*button);
+  _button_click_manager->Add(button);
 }
 

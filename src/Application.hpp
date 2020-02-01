@@ -7,6 +7,7 @@
 #include "Util/Callback.hpp"
 #include "Graphics/ButtonRenderer.hpp"
 #include "Util/Timer.hpp"
+#include "Graphics/ButtonClickManager.hpp"
 
 namespace sge {
   class Application {
@@ -16,9 +17,9 @@ namespace sge {
     Graphics::RectangleRenderer *_rectangle_renderer = nullptr;
     Graphics::ShaderProgram *_font_program = nullptr, *_rectangle_program = nullptr;
     Graphics::ButtonRenderer *_button_renderer;
+    Graphics::ButtonClickManager* _button_click_manager = nullptr;
     Camera *_camera;
     glm::mat4 _view, _model, _projection;
-    std::vector<std::pair<glm::vec4, std::function<void(float, float)>>> _click_bounds{};
     Util::Timer _timer{};
   public:
     explicit Application(const std::string &title, int width, int height);
@@ -37,10 +38,8 @@ namespace sge {
 
     void DrawText(const Graphics::Text& text) const;
 
-    void DrawButton(const Graphics::Button& button);
-    void DrawButton(const Graphics::Button& button, std::function<void(float, float)> callback);
+    void DrawButton(Graphics::Button* button);
 
-    void HandleMouseClick(float x, float y);
     void HandleResize(int x, int y);
   };
 }

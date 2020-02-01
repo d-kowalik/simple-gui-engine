@@ -5,6 +5,7 @@
 
 namespace sge::Graphics {
   struct Button {
+    virtual ~Button() = default;
     std::string text{};
     glm::vec2 scale = ButtonDefaults::SCALE;
     glm::vec2 position = ButtonDefaults::POSITION;
