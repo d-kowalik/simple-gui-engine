@@ -21,7 +21,7 @@ void sge::Graphics::ButtonRenderer::DrawButton(const Button& button) {
   Rectangle rectangle;
   rectangle.scale = size;
   rectangle.position = position;
-  rectangle.color = fill_color;
+  rectangle.color = button.toggled ? button.toggled_color : fill_color;
 
   auto height = _font_renderer->GetFont().GetSize();
   auto final_size = _font_renderer->CheckSize(stext);

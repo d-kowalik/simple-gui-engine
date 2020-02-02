@@ -38,7 +38,7 @@ namespace sge {
 
     void DrawText(const Graphics::Text& text) const;
 
-    void DrawButton(Graphics::Button* button);
+    void DrawButton(Graphics::Button& button);
 
     void HandleResize(int x, int y);
   };

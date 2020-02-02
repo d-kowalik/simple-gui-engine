@@ -110,8 +110,8 @@ void sge::Application::Run() {
     _font_program->Use();
     _font_program->SetUniformMat4f("view", _view);
 
-    _button_click_manager->Clear();
     Window::Instance()->Update();
+    _button_click_manager->Clear();
   }
 }
 
@@ -142,9 +142,9 @@ void sge::Application::HandleResize(int w, int h) {
   _font_program->SetUniformMat4f("projection", _projection);
 }
 
-void sge::Application::DrawButton(sge::Graphics::Button* button) {
+void sge::Application::DrawButton(sge::Graphics::Button& button) {
   _rectangle_program->Use();
-  _button_renderer->DrawButton(*button);
+  _button_renderer->DrawButton(button);
   _button_click_manager->Add(button);
 }
 

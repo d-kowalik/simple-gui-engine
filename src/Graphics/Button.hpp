@@ -13,6 +13,9 @@ namespace sge::Graphics {
     glm::vec3 text_color = ButtonDefaults::TEXT_COLOR;
     glm::vec3 fill_color = ButtonDefaults::FILL_COLOR;
     glm::vec3 pressed_color = ButtonDefaults::PRESSED_COLOR;
+    bool is_toggle_button = false;
+    bool toggled = false;
+    glm::vec3 toggled_color = {.3f, .3f, .3f};
     Util::Callback<float, float> callback;
   };
 }

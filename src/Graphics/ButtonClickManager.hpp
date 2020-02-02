@@ -12,7 +12,7 @@ namespace sge::Graphics {
   public:
     ButtonClickManager();
 
-    void Add(Button* button);
+    void Add(Button& button);
     void Clear();
 
     void HandleClick(float x, float y);

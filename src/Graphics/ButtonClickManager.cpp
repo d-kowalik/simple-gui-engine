@@ -16,32 +16,28 @@ sge::Graphics::ButtonClickManager::ButtonClickManager() {
 }
 
 void sge::Graphics::ButtonClickManager::HandleClick(float x, float y) {
-  bool toggle_check = false;
-  for (Graphics::Button* button : _buttons) {
+  bool toggle_switch = false;
+  Button *toggled_button = nullptr;
+  for (auto *button : _buttons) {
     if (x >= button->position.x && y >= button->position.y && x <= button->position.x + button->scale.x &&
         y <= button->position.y + button->scale.y) {
-      if (dynamic_cast<Graphics::ToggleButton *>(button) != nullptr)  {
-        toggle_check = true;
-        dynamic_cast<Graphics::ToggleButton *>(button)->toggled = true;
+      if (button->is_toggle_button) {
+        toggle_switch = true;
+        button->toggled = true;
+        toggled_button = button;
       }
       button->callback(x, y);
     }
   }
 
-  if (toggle_check) {
-    for (Graphics::Button* button : _buttons) {
-      if (!(x >= button->position.x && y >= button->position.y && x <= button->position.x + button->scale.x &&
-          y <= button->position.y + button->scale.y)) {
-        if (dynamic_cast<Graphics::ToggleButton *>(button) != nullptr)  {
-          dynamic_cast<Graphics::ToggleButton *>(button)->toggled = false;
-        }
-      }
-    }
-  }
+  if (toggle_switch)
+    for (auto *button : _buttons)
+      if (button != toggled_button)
+        button->toggled = false;
 }
 
-void sge::Graphics::ButtonClickManager::Add(sge::Graphics::Button *button) {
-  _buttons.push_back(button);
+void sge::Graphics::ButtonClickManager::Add(sge::Graphics::Button &button) {
+  _buttons.push_back(&button);
 }
 
 void sge::Graphics::ButtonClickManager::Clear() {
