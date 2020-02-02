@@ -4,8 +4,6 @@
 
 #include "ButtonClickManager.hpp"
 
-#include "ToggleButton.hpp"
-
 #include "Window.hpp"
 
 #include <functional>
