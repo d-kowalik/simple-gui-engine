@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Input/Keycodes.hpp>
 #include "Graphics/FontRenderer.hpp"
 #include "Graphics/RectangleRenderer.hpp"
 #include "Graphics/ShaderProgram.hpp"
@@ -29,6 +30,8 @@ namespace sge {
     virtual bool OnCreate() = 0;
 
     virtual bool OnUpdate(float delta) = 0;
+
+    virtual void HandleKeyPressed(Key key);
 
     void Run();
 

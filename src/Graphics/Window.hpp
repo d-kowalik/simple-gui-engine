@@ -6,6 +6,7 @@
 
 #include <string>
 #include <functional>
+#include <Input/Keycodes.hpp>
 
 namespace sge {
   class Window {
@@ -14,6 +15,8 @@ namespace sge {
     using OnResizeEvent = std::function<void(int, int)>;
     Util::Callback<float, float> OnMouseClick;
     Util::Callback<int, int> OnResize;
+    Util::Callback<Key> OnButtonPressed;
+
   private:
     static Window* _instance;
     unsigned _last_fps = 0;

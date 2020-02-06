@@ -5,6 +5,12 @@
 namespace sge {
   void framebuffer_size_callback(GLFWwindow *window, int w, int h);
   void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+  void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+  void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    auto *win = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+    if (action == GLFW_PRESS)
+      win->OnButtonPressed(static_cast<sge::Key>(key));
+  }
 
   Window *Window::_instance = nullptr;
 
@@ -78,6 +84,7 @@ namespace sge {
     glfwSetWindowUserPointer(_window, this);
     glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
     glfwSetMouseButtonCallback(_window, mouse_button_callback);
+    glfwSetKeyCallback(_window, key_callback);
     return true;
   }
 
@@ -85,7 +92,6 @@ namespace sge {
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
       return false;
     }
-
 
     glViewport(0, 0, _width, _height);
     glEnable(GL_DEPTH_TEST);

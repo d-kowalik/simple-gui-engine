@@ -93,6 +93,7 @@ sge::Application::Application(const std::string &title, int width, int height) {
   _instance = this;
 
   Window::Instance()->OnResize += std::bind(&Application::HandleResize, this, std::placeholders::_1, std::placeholders::_2);
+  Window::Instance()->OnButtonPressed += std::bind(&Application::HandleKeyPressed, this, std::placeholders::_1);
 }
 
 void sge::Application::Run() {
