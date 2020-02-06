@@ -135,6 +135,11 @@ sge::Application::~Application() {
   Window::Destroy();
 }
 
+void sge::Application::HandleKeyPressed(Key key) {
+  OnKeyPressed(key);
+}
+
+
 void sge::Application::HandleResize(int w, int h) {
   _projection = glm::ortho(0.0f, (float)w, 0.0f, (float)h, 0.1f, 10.0f);
   _rectangle_program->Use();

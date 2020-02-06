@@ -13,7 +13,7 @@
 namespace sge {
   class Application {
     inline static Application *_instance = nullptr;
-  public:
+  protected:
     Graphics::FontRenderer *_font_renderer = nullptr;
     Graphics::RectangleRenderer *_rectangle_renderer = nullptr;
     Graphics::ShaderProgram *_font_program = nullptr, *_rectangle_program = nullptr;
@@ -22,6 +22,9 @@ namespace sge {
     Camera *_camera;
     glm::mat4 _view, _model, _projection;
     Util::Timer _timer{};
+  private:
+    void HandleKeyPressed(Key key);
+
   public:
     explicit Application(const std::string &title, int width, int height);
 
@@ -31,7 +34,7 @@ namespace sge {
 
     virtual bool OnUpdate(float delta) = 0;
 
-    virtual void HandleKeyPressed(Key key);
+    virtual void OnKeyPressed(Key key) {};
 
     void Run();
 
