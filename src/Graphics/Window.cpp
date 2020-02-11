@@ -85,6 +85,7 @@ namespace sge {
     glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
     glfwSetMouseButtonCallback(_window, mouse_button_callback);
     glfwSetKeyCallback(_window, key_callback);
+    glfwSetWindowSizeLimits(_window, 960, 360, GLFW_DONT_CARE, GLFW_DONT_CARE);
     return true;
   }
 
