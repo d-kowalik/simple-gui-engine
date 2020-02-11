@@ -146,6 +146,7 @@ void sge::Application::HandleResize(int w, int h) {
   _rectangle_program->SetUniformMat4f("projection", _projection);
   _font_program->Use();
   _font_program->SetUniformMat4f("projection", _projection);
+  OnResize(w, h);
 }
 
 void sge::Application::DrawButton(sge::Graphics::Button& button) {

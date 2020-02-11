@@ -24,6 +24,7 @@ namespace sge {
     Util::Timer _timer{};
   private:
     void HandleKeyPressed(Key key);
+    void HandleResize(int x, int y);
 
   public:
     explicit Application(const std::string &title, int width, int height);
@@ -34,7 +35,8 @@ namespace sge {
 
     virtual bool OnUpdate(float delta) = 0;
 
-    virtual void OnKeyPressed(Key key) {};
+    virtual void OnKeyPressed(Key key) {}
+    virtual void OnResize(int w, int h) {}
 
     void Run();
 
@@ -46,7 +48,6 @@ namespace sge {
 
     void DrawButton(Graphics::Button& button);
 
-    void HandleResize(int x, int y);
   };
 }
 
