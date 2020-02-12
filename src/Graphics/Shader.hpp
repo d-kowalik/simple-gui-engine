@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "../Engine.hpp"
 
 namespace sge::Graphics {
   class Shader {
@@ -12,8 +12,8 @@ namespace sge::Graphics {
 
     unsigned GetId() const { return _id; }
 
-    static Shader* CreateFromPath(unsigned type, const std::string& path);
-    static Shader* CreateFromRawData(unsigned type, const std::string& data);
+    static Ref<Shader> CreateFromPath(unsigned type, const std::string& path);
+    static Ref<Shader> CreateFromRawData(unsigned type, const std::string& data);
 
     void Delete() const;
 

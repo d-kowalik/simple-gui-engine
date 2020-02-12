@@ -5,14 +5,15 @@
 #include <glm/glm.hpp>
 
 #include "Shader.hpp"
+#include "Engine.hpp"
 
 namespace sge::Graphics {
   class ShaderProgram {
     unsigned _id;
-    std::vector<Shader*> _shaders{};
+    std::vector<Ref<Shader>> _shaders{};
 
   public:
-    ShaderProgram(const std::vector<Shader*>& shaders);
+    ShaderProgram(const std::vector<Ref<Shader>>& shaders);
 
     void Use() const;
 

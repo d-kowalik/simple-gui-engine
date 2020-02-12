@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace sge {
-  Graphics::ShaderProgram::ShaderProgram(const std::vector<Shader*> &shaders) : _shaders(shaders) {
+  Graphics::ShaderProgram::ShaderProgram(const std::vector<Ref<Shader>> &shaders) : _shaders(shaders) {
     _id = glCreateProgram();
 
     for (const auto &shader : shaders)

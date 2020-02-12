@@ -1,6 +1,7 @@
 #include "Shader.hpp"
 
 #include <glad/glad.h>
+#include <memory>
 
 #include "Util/FileUtil.hpp"
 
@@ -37,14 +38,14 @@ namespace sge::Graphics {
     }
   }
 
-  Shader* Shader::CreateFromRawData(unsigned type, const std::string &data) {
-    return new Shader(type, data);
+  Ref<Shader> Shader::CreateFromRawData(unsigned type, const std::string &data) {
+    return MakeRef<Shader>(type, data);
   }
 
-  Shader *Shader::CreateFromPath(unsigned type, const std::string &path) {
+  Ref<Shader> Shader::CreateFromPath(unsigned type, const std::string &path) {
     const auto data = sge::FileUtil::Read(path);
     const auto source = data.value_or("");
 
-    return new Shader(type, source);
+    return MakeRef<Shader>(type, source);
   }
 }
