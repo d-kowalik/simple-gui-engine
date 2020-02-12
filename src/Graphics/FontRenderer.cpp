@@ -3,7 +3,7 @@
 #include "FontRenderer.hpp"
 
 sge::Graphics::FontRenderer::FontRenderer(const sge::Graphics::Font &font,
-                                          const sge::Graphics::ShaderProgram &program) : _font(font), _program(program) {
+                                          const Ref<sge::Graphics::ShaderProgram> program) : _font(font), _program(program) {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glGenVertexArrays(1, &_vao);
@@ -22,8 +22,8 @@ void sge::Graphics::FontRenderer::Render(const sge::Graphics::Text &stext) {
   const auto text = stext.text;
   const auto position = stext.position;
   const auto scale = stext.scale;
-  _program.Use();
-  _program.SetUniform3f("textColor", color);
+  _program->Use();
+  _program->SetUniform3f("textColor", color);
   glActiveTexture(GL_TEXTURE0);
   glBindVertexArray(_vao);
 

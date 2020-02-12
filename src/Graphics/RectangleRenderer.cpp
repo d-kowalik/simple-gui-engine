@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-sge::Graphics::RectangleRenderer::RectangleRenderer(const sge::Graphics::ShaderProgram &program) : _program(program) {
+sge::Graphics::RectangleRenderer::RectangleRenderer(const Ref<sge::Graphics::ShaderProgram> program) : _program(program) {
   glGenVertexArrays(1, &_vao);
   glBindVertexArray(_vao);
 

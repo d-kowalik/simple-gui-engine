@@ -105,8 +105,7 @@ namespace sge {
   }
 
   void Window::Destroy() {
-    if (_instance != nullptr)
-      delete Window::_instance;
+    delete Window::_instance;
   }
 
   void Window::UpdateTitle(unsigned fps) {

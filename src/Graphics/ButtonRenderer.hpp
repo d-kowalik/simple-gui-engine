@@ -6,11 +6,11 @@
 
 namespace sge::Graphics {
   class ButtonRenderer {
-    FontRenderer *_font_renderer;
-    RectangleRenderer *_rectangle_renderer;
+    Ref<FontRenderer> _font_renderer;
+    Ref<RectangleRenderer> _rectangle_renderer;
 
   public:
-    ButtonRenderer(FontRenderer *font_renderer, RectangleRenderer *rectangle_renderer);
+    ButtonRenderer(Ref<FontRenderer> font_renderer, Ref<RectangleRenderer> rectangle_renderer);
 
     void DrawButton(const Button& button);
   };

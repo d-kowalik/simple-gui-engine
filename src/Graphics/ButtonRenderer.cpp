@@ -1,7 +1,7 @@
 #include "ButtonRenderer.hpp"
 
-sge::Graphics::ButtonRenderer::ButtonRenderer(sge::Graphics::FontRenderer *font_renderer,
-                                              sge::Graphics::RectangleRenderer *rectangle_renderer) : _font_renderer(
+sge::Graphics::ButtonRenderer::ButtonRenderer(Ref<sge::Graphics::FontRenderer> font_renderer,
+                                              Ref<sge::Graphics::RectangleRenderer> rectangle_renderer) : _font_renderer(
     font_renderer), _rectangle_renderer(rectangle_renderer) {
 
 }

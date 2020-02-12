@@ -12,7 +12,7 @@
 sge::Application::Application(const std::string &title, int width, int height) {
   Window::Create(width, height, title);
 
-  _camera = new Camera{100.f};
+  _camera = MakeRef<Camera>(100.f);
 
   const auto vertex_shader = Graphics::Shader::CreateFromRawData(GL_VERTEX_SHADER, "#version 330 core\n"
                                                                                    "\n"
@@ -38,7 +38,7 @@ sge::Application::Application(const std::string &title, int width, int height) {
                                                                     "void main() {\n"
                                                                     "    FinalColor = vec4(Color, 1.0);\n"
                                                                     "}");
-  _rectangle_program =new  Graphics::ShaderProgram({vertex_shader, fragment_shader});
+  _rectangle_program = MakeRef<Graphics::ShaderProgram>(std::vector<Ref<Graphics::Shader>>{vertex_shader, fragment_shader});
 
   const auto text_vertex_shader = Graphics::Shader::CreateFromRawData(GL_VERTEX_SHADER, "#version 330 core\n"
                                                                      "\n"
@@ -64,12 +64,12 @@ sge::Application::Application(const std::string &title, int width, int height) {
                                                                          "    vec4 sampled = vec4(1.f, 1.f, 1.f, texture(text, TexCoords).r);\n"
                                                                          "    color = vec4(textColor, 1.f) * sampled;\n"
                                                                          "}");
-  _font_program = new Graphics::ShaderProgram({text_vertex_shader, text_fragment_shader});
+  _font_program = MakeRef<Graphics::ShaderProgram>(std::vector<Ref<Graphics::Shader>>{text_vertex_shader, text_fragment_shader});
 
   FT_Library ft;
   if (FT_Init_FreeType(&ft)) printf("Could not init FreeType\n");
   Graphics::Font arial{"../fonts/arial.ttf", 48, ft};
-  _font_renderer = new Graphics::FontRenderer {arial, *_font_program};
+  _font_renderer = MakeRef<Graphics::FontRenderer>(arial, _font_program);
   FT_Done_FreeType(ft);
 
   _view = _camera->View();
@@ -85,10 +85,10 @@ sge::Application::Application(const std::string &title, int width, int height) {
   _font_program->SetUniformMat4f("projection", _projection);
   _font_program->SetUniformMat4f("view", _view);
 
-  _rectangle_renderer = new Graphics::RectangleRenderer {*_rectangle_program};
+  _rectangle_renderer = MakeRef<Graphics::RectangleRenderer>(_rectangle_program);
 
-  _button_renderer = new Graphics::ButtonRenderer(_font_renderer, _rectangle_renderer);
-  _button_click_manager = new Graphics::ButtonClickManager();
+  _button_renderer = MakeRef<Graphics::ButtonRenderer>(_font_renderer, _rectangle_renderer);
+  _button_click_manager = MakeRef<Graphics::ButtonClickManager>();
 
   _instance = this;
 
@@ -127,11 +127,8 @@ void sge::Application::DrawText(const Graphics::Text &text) const {
 }
 
 sge::Application::~Application() {
-  delete _font_renderer;
-  delete _rectangle_renderer;
-  delete _font_program;
-  delete _rectangle_program;
-  delete _camera;
+  Application::_instance = nullptr;
+
   Window::Destroy();
 }
 

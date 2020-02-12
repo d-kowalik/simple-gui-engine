@@ -11,10 +11,10 @@ namespace sge::Graphics {
         0, 1, 3,
         1, 2, 3
     };
-    ShaderProgram _program;
+    Ref<ShaderProgram> _program;
 
   public:
-    explicit RectangleRenderer(const ShaderProgram& program);
+    explicit RectangleRenderer(const Ref<ShaderProgram> program);
 
     void Draw(const Rectangle& rectangle);
   };

@@ -14,12 +14,12 @@ namespace sge {
   class Application {
     inline static Application *_instance = nullptr;
   protected:
-    Graphics::FontRenderer *_font_renderer = nullptr;
-    Graphics::RectangleRenderer *_rectangle_renderer = nullptr;
-    Graphics::ShaderProgram *_font_program = nullptr, *_rectangle_program = nullptr;
-    Graphics::ButtonRenderer *_button_renderer;
-    Graphics::ButtonClickManager* _button_click_manager = nullptr;
-    Camera *_camera;
+    Ref<Graphics::FontRenderer> _font_renderer = nullptr;
+    Ref<Graphics::RectangleRenderer> _rectangle_renderer = nullptr;
+    Ref<Graphics::ShaderProgram> _font_program = nullptr, _rectangle_program = nullptr;
+    Ref<Graphics::ButtonRenderer> _button_renderer;
+    Ref<Graphics::ButtonClickManager> _button_click_manager = nullptr;
+    Ref<Camera> _camera;
     glm::mat4 _view, _model, _projection;
     Util::Timer _timer{};
   private:
@@ -28,8 +28,9 @@ namespace sge {
 
   public:
     explicit Application(const std::string &title, int width, int height);
-
     virtual ~Application();
+    Application(const Application& cpy) = delete;
+    Application& operator=(const Application& cpy) = delete;
 
     virtual bool OnCreate() = 0;
 
