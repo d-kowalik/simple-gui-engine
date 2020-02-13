@@ -46,6 +46,7 @@ set(LIBS glfw GL GLAD ${FREETYPE} dl)
 include_directories(
 	"${CMAKE_SOURCE_DIR}/src"
 	"${CMAKE_SOURCE_DIR}/include"
+	"/usr/include"
 )
 
 # Define the link libraries
