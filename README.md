@@ -3,10 +3,10 @@
 
 ## Dependencies
 - OpenGL `libmesa-dev on Ubuntu`
-- FreeType2 (included)
+- FreeType2 `libfreetype6-dev on Ubuntu`
 - GLAD (included)
 - GLFW3 `libglfw3-dev on Ubuntu`
-- GLM (included)
+- GLM `libglm-dev on Ubuntu`
 
 ## How to compile
 1. Create a build directory `mkdir build`
