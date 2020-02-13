@@ -2,7 +2,7 @@
 
 
 ## Dependencies
-- OpenGL `libmesa-dev on Ubuntu`
+- OpenGL `sudo apt-get install freeglut3 freeglut3-dev libglew1.5 libglew1.5-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev on Ubuntu`
 - FreeType2 `libfreetype6-dev on Ubuntu`
 - GLAD (included)
 - GLFW3 `libglfw3-dev on Ubuntu`
