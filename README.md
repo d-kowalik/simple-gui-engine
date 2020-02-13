@@ -1,1 +1,50 @@
 # Simple GUI Engine
+
+
+## Dependencies
+- OpenGL `libmesa-dev on Ubuntu`
+- FreeType2 (included)
+- GLAD (included)
+- GLFW3 `libglfw3-dev on Ubuntu`
+- GLM (included)
+
+## How to compile
+1. Create a build directory `mkdir build`
+2. Enter build directory `cd build`
+3.  Run `cmake ..`
+4. Run `make`
+5. **libsge.a** is the resulting library file
+
+## Usage
+Create a class deriving from `sge::Application` and use the `Run()` method.
+Example:
+```
+#include <Application.hpp>
+#include <cstdio>
+
+class Program : public sge::Application {
+  using sge::Application::Application;
+  
+  bool OnCreate() override {
+    printf("Hello, world!");
+    return true;
+  }
+
+  bool OnUpdate(float delta) override {
+    return true;
+  }
+};
+
+int main() {
+  Program program{"Example", 1280, 720};
+  program.Run();
+}
+```
+
+## Methods available to override
+- `bool OnCreate()` - called once when `Run()` is called
+- `bool OnUpdate(float delta)` - called every frame
+- `void OnKeyPressed(Key key)` - called when a key is pressed
+- `void OnResize(int w, int h)` - called on resize
+- virtual destructor
+
