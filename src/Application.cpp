@@ -106,10 +106,6 @@ void sge::Application::Run() {
     Window::Instance()->UpdateTitle(_timer.GetFPS());
     Window::Instance()->Clear();
 
-    _rectangle_program->Use();
-    _rectangle_program->SetUniformMat4f("view", _view);
-    _font_program->Use();
-    _font_program->SetUniformMat4f("view", _view);
     _rectangle_renderer->Begin();
     OnUpdate(_timer.GetDelta());
     for (const auto& rect : _button_renderer->_rectangles)
@@ -123,6 +119,10 @@ void sge::Application::Run() {
       DrawText(text);
     _button_renderer->_texts.clear();
     _font_renderer->Draw();
+    _rectangle_program->Use();
+    _rectangle_program->SetUniformMat4f("view", _view);
+    _font_program->Use();
+    _font_program->SetUniformMat4f("view", _view);
 
     Window::Instance()->Update();
     _button_click_manager->Clear();
