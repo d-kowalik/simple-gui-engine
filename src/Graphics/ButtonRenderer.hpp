@@ -10,6 +10,8 @@ namespace sge::Graphics {
     Ref<RectangleRenderer> _rectangle_renderer;
 
   public:
+    std::vector<Rectangle> _rectangles;
+    std::vector<Text> _texts;
     ButtonRenderer(Ref<FontRenderer> font_renderer, Ref<RectangleRenderer> rectangle_renderer);
 
     void DrawButton(const Button& button);

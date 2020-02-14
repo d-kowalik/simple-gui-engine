@@ -78,3 +78,14 @@ glm::vec2 sge::Graphics::FontRenderer::CheckSize(const Text& stext) {
     }
     return {width, height};
 }
+
+void sge::Graphics::FontRenderer::Add(sge::Graphics::Text text) {
+  _queue.push_back(text);
+}
+
+void sge::Graphics::FontRenderer::Draw() {
+  for (const auto text : _queue) {
+    Render(text);
+  }
+  _queue.clear();
+}

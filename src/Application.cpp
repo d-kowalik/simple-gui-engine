@@ -16,28 +16,30 @@ sge::Application::Application(const std::string &title, int width, int height) {
 
   const auto vertex_shader = Graphics::Shader::CreateFromRawData(GL_VERTEX_SHADER, "#version 330 core\n"
                                                                                    "\n"
-                                                                                   "layout (location = 0) in vec3 position;\n"
-                                                                                   "layout (location = 1) in vec3 color;\n"
-                                                                                   "\n"
-                                                                                   "uniform mat4 model;\n"
-                                                                                   "uniform mat4 view;\n"
-                                                                                   "uniform mat4 projection;\n"
+                                                                                   "layout (location = 0) in vec3 aPos;\n"
+                                                                                   "layout (location = 1) in vec3 aColor;\n"
+                                                                                   "layout (location = 2) in mat4 aModel;\n"
                                                                                    "\n"
                                                                                    "out vec3 Color;\n"
                                                                                    "\n"
+                                                                                   "uniform mat4 view;\n"
+                                                                                   "uniform mat4 projection;\n"
+                                                                                   "\n"
                                                                                    "void main() {\n"
-                                                                                   "    gl_Position = projection * view * model * vec4(position, 1.0);\n"
-                                                                                   "    Color = color;\n"
-                                                                                   "}");
+                                                                                   "\tgl_Position = projection * view * aModel * vec4(aPos, 1.0f);\n"
+                                                                                   "\tColor = aColor;\n"
+                                                                                   "}"
+                                                                                   );
   const auto fragment_shader = Graphics::Shader::CreateFromRawData(GL_FRAGMENT_SHADER, "#version 330 core\n"
-                                                                    "\n"
-                                                                    "in vec3 Color;\n"
-                                                                    "\n"
-                                                                    "out vec4 FinalColor;\n"
-                                                                    "\n"
-                                                                    "void main() {\n"
-                                                                    "    FinalColor = vec4(Color, 1.0);\n"
-                                                                    "}");
+                                                                                       "\n"
+                                                                                       "in vec3 Color;\n"
+                                                                                       "\n"
+                                                                                       "out vec4 FragColor;\n"
+                                                                                       "\n"
+                                                                                       "void main() {\n"
+                                                                                       "\tFragColor = vec4(Color, 1.0f);\n"
+                                                                                       "}"
+                                                                                       );
   _rectangle_program = MakeRef<Graphics::ShaderProgram>(std::vector<Ref<Graphics::Shader>>{vertex_shader, fragment_shader});
 
   const auto text_vertex_shader = Graphics::Shader::CreateFromRawData(GL_VERTEX_SHADER, "#version 330 core\n"
@@ -103,13 +105,24 @@ void sge::Application::Run() {
     _timer.Tick();
     Window::Instance()->UpdateTitle(_timer.GetFPS());
     Window::Instance()->Clear();
-    OnUpdate(_timer.GetDelta());
 
-    _view = _camera->View();
     _rectangle_program->Use();
     _rectangle_program->SetUniformMat4f("view", _view);
     _font_program->Use();
     _font_program->SetUniformMat4f("view", _view);
+    _rectangle_renderer->Begin();
+    OnUpdate(_timer.GetDelta());
+    for (const auto& rect : _button_renderer->_rectangles)
+      DrawRectangle(rect);
+    _button_renderer->_rectangles.clear();
+    _view = _camera->View();
+    _rectangle_renderer->End();
+    _rectangle_renderer->Draw();
+    _font_program->Use();
+    for (const auto& text : _button_renderer->_texts)
+      DrawText(text);
+    _button_renderer->_texts.clear();
+    _font_renderer->Draw();
 
     Window::Instance()->Update();
     _button_click_manager->Clear();
@@ -117,13 +130,11 @@ void sge::Application::Run() {
 }
 
 void sge::Application::DrawRectangle(const Graphics::Rectangle& rectangle) const {
-  _rectangle_program->Use();
-  _rectangle_renderer->Draw(rectangle);
+  _rectangle_renderer->Add(MakeRef<Graphics::Rectangle>(rectangle));
 }
 
 void sge::Application::DrawText(const Graphics::Text &text) const {
-  _font_program->Use();
-  _font_renderer->Render(text);
+  _font_renderer->Add(text);
 }
 
 sge::Application::~Application() {

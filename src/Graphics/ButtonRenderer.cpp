@@ -25,11 +25,11 @@ void sge::Graphics::ButtonRenderer::DrawButton(const Button& button) {
 
   auto height = _font_renderer->GetFont().GetSize();
   auto final_size = _font_renderer->CheckSize(stext);
-  _rectangle_renderer->Draw(rectangle);
+  _rectangles.push_back(rectangle);
 
   glm::vec2 text_position{position.x + size.x / 2 - final_size.x / 2, position.y + size.y / 2 - final_size.y / 2};
   stext.position = text_position;
 
-  _font_renderer->Render(stext);
+  _texts.push_back(stext);
 }
 

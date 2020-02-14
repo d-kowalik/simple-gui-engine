@@ -117,7 +117,5 @@ namespace sge {
 
   Window::~Window() {
     Close();
-    glfwDestroyWindow(_window);
-    glfwTerminate();
   }
 } // namespace sge
