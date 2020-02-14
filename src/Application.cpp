@@ -128,7 +128,7 @@ void sge::Application::DrawText(const Graphics::Text &text) const {
 
 sge::Application::~Application() {
   Application::_instance = nullptr;
-
+  Window::Instance()->Close();
   Window::Destroy();
 }
 

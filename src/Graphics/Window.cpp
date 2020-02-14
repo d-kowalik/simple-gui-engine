@@ -114,4 +114,10 @@ namespace sge {
     std::string newTitle{ _title + " | " + std::to_string(fps) + "fps" };
     glfwSetWindowTitle(_window, newTitle.c_str());
   }
+
+  Window::~Window() {
+    Close();
+    glfwDestroyWindow(_window);
+    glfwTerminate();
+  }
 } // namespace sge

@@ -34,6 +34,7 @@ namespace sge {
     bool InitializeOpenGL();
 
     Window(int width, int height, std::string title);
+    ~Window();
 
   public:
     inline bool ShouldClose() const { return glfwWindowShouldClose(_window); }
